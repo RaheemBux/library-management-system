@@ -28,8 +28,7 @@ public class BookService implements IBookService {
             throw new IllegalArgumentException("Book with same isbn with different author/title can't be registered");
         }
         Book book = BookMapper.BOOK_MAPPER.toBook(bookDto);
-        BookDto bookDto1 = BookMapper.BOOK_MAPPER.toBookDto(bookRepository.save(book));
-        return bookDto1;
+        return BookMapper.BOOK_MAPPER.toBookDto(bookRepository.save(book));
     }
 
     /**
