@@ -18,6 +18,11 @@ public class BookService implements IBookService {
 
     private final BookRepository bookRepository;
 
+    /**
+     * Method to create book
+     * @param bookDto BookDto
+     * @return BookDto
+     */
     @Override
     public BookDto createBook(BookDto bookDto) {
         if(!isValid(bookDto)){
@@ -27,21 +32,39 @@ public class BookService implements IBookService {
         return BookMapper.BOOK_MAPPER.toBookDto(bookRepository.save(book));
     }
 
+    /**
+     * Method to get all books
+     * @return List<BookDto>
+     */
     @Override
     public List<BookDto> getAllBooks() {
         return BookMapper.BOOK_MAPPER.toBookDtoList(bookRepository.findAll());
     }
 
+    /**
+     * Method to get book by isbn
+     * @param isbn String
+     * @return Optional<Book>
+     */
     @Override
     public Optional<Book> getBookByIsbn(String isbn) {
         return bookRepository.findByIsbn(isbn);
     }
 
+    /**
+     * Method to get list of all borrowed books
+     * @return List<BookDto>
+     */
     @Override
     public List<BookDto> getAllBorrowedBooks() {
         return BookMapper.BOOK_MAPPER.toBookDtoList(bookRepository.findAllByIsBorrowedTrue());
     }
 
+    /**
+     * Method to validate book
+     * @param bookDto BookDto
+     * @return boolean
+     */
     private boolean isValid(BookDto bookDto){
         Optional<Book> optionalBook = getBookByIsbn(bookDto.getIsbn());
         if(optionalBook.isPresent()){

@@ -16,12 +16,21 @@ public class BorrowerService implements IBorrowerService {
 
     private final BorrowerRepository borrowerRepository;
 
+    /**
+     * Method to create borrower
+     * @param borrowerDto BorrowerDto
+     * @return BorrowerDto
+     */
     @Override
     public BorrowerDto createBorrower(BorrowerDto borrowerDto) {
         Borrower borrower = BorrowerMapper.BORROWER_MAPPER.toBorrower(borrowerDto);
         return BorrowerMapper.BORROWER_MAPPER.toBorrowerDto(borrowerRepository.save(borrower));
     }
 
+    /**
+     * Method to get list of borrowers
+     * @return List<BorrowerDto>
+     */
     @Override
     public List<BorrowerDto> getAllBorrowers() {
         return BorrowerMapper.BORROWER_MAPPER.toBorrowerDtoList(borrowerRepository.findAll());

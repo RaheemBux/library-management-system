@@ -12,6 +12,7 @@ import com.rbux.library.management.system.repository.BorrowerRepository;
 import com.rbux.library.management.system.service.IBookBorrowedService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,19 +21,27 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookBorrowerService implements IBookBorrowedService {
 
     private final BookBorrowerRepository bookBorrowerRepository;
     private final BookRepository bookRepository;
     private final BorrowerRepository borrowerRepository;
 
-
+    /**
+     * Method to add borrow a book
+     * @param bookBorrowerDto BookBorrowerDto
+     * @return BookBorrowerResponseDto
+     */
     @Override
     @Transactional
     public BookBorrowerResponseDto borrowBook(BookBorrowerDto bookBorrowerDto) {
+        // validate book and borrower
         BookBorrower bookBorrower = validateAndGet(bookBorrowerDto.getBookId(),bookBorrowerDto.getBorrowerId());
+        // validate if books is already borrowed
         Optional<Book> optionalBook = bookRepository.findByIdAndIsBorrowedTrue(bookBorrower.getBook().getId());
         if(optionalBook.isPresent()){
+            log.error("This book is currently borrowed by the borrower");
             throw new IllegalStateException("This book is currently borrowed by the borrower");
         }
         bookBorrower.setBorrowDate(LocalDateTime.now());
@@ -40,14 +49,22 @@ public class BookBorrowerService implements IBookBorrowedService {
         book.setBorrowed(Boolean.TRUE);
         bookRepository.save(book);
         BookBorrower savedBorrowRecord = bookBorrowerRepository.save(bookBorrower);
+        log.info("borrowed book saved into database {} ",savedBorrowRecord);
         return BookBorrowerMapper.BOOK_BORROWER_MAPPER.toBookBorrowerDto(savedBorrowRecord);
     }
 
+    /**
+     * Method to return borrowed book
+     * @param bookBorrowerDto BookBorrowerDto
+     * @return BookBorrowerResponseDto
+     */
     @Override
     @Transactional
     public BookBorrowerResponseDto returnBook(BookBorrowerDto bookBorrowerDto) {
+        // validate book and borrower
         BookBorrower validedBookBorrower = validateAndGet(bookBorrowerDto.getBookId(),bookBorrowerDto.getBorrowerId());
         Book book = validedBookBorrower.getBook();
+        // check if books is borrowed or not
         BookBorrower bookBorrower = bookBorrowerRepository.findByBookAndBorrowerAndReturnDateIsNull(book, validedBookBorrower.getBorrower())
                 .orElseThrow(() -> new IllegalStateException("This book is not currently borrowed by the borrower"));
         bookBorrower.setReturnDate(LocalDateTime.now());
@@ -57,6 +74,10 @@ public class BookBorrowerService implements IBookBorrowedService {
         return BookBorrowerMapper.BOOK_BORROWER_MAPPER.toBookBorrowerDto(updatedBookBorrower);
     }
 
+    /**
+     * Method to get list of borrowed books
+     * @return List<BookBorrowerResponseDto>
+     */
     @Override
     public List<BookBorrowerResponseDto> getAllBookBorrowed() {
         return BookBorrowerMapper.BOOK_BORROWER_MAPPER.toBookBorrowerDtoList(bookBorrowerRepository.findAll());
