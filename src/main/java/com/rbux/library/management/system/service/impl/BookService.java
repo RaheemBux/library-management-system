@@ -8,7 +8,6 @@ import com.rbux.library.management.system.service.IBookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +28,8 @@ public class BookService implements IBookService {
             throw new IllegalArgumentException("Book with same isbn with different author/title can't be registered");
         }
         Book book = BookMapper.BOOK_MAPPER.toBook(bookDto);
-        return BookMapper.BOOK_MAPPER.toBookDto(bookRepository.save(book));
+        BookDto bookDto1 = BookMapper.BOOK_MAPPER.toBookDto(bookRepository.save(book));
+        return bookDto1;
     }
 
     /**
