@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth-> auth.requestMatchers("/home/**").authenticated()
                         .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/webjars/**").permitAll()
                         .requestMatchers("/api/v1/book/**").authenticated()
                         .requestMatchers("/api/v1/borrower/**").authenticated()
                         .anyRequest().authenticated())

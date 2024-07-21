@@ -79,3 +79,5 @@ The project consists of four main tables:
 - Maven
 - MySQL
 - Docker (for containerization)
+### Swagger API Documentation
+- http://localhost:8080/swagger-ui/index.html
