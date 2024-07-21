@@ -55,6 +55,12 @@ The project consists of four main tables:
 
 ### Authentication Endpoint
 - **POST /login**: Authenticates a user and returns a JWT token.
+  ```json
+  {
+    "email": "raheem",
+    "password": "raheem"
+  }
+
 ### Book Endpoints
 - **POST /api/v1/book**: Registers a new book.
 - **GET /api/v1/book**: Retrieves all books, with an optional filter for borrowed books.
