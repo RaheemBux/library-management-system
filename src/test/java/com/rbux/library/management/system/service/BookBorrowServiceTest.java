@@ -1,16 +1,8 @@
 package com.rbux.library.management.system.service;
 
-import com.rbux.library.management.system.dto.BookBorrowerDto;
-import com.rbux.library.management.system.dto.BookBorrowerResponseDto;
 import com.rbux.library.management.system.dto.BookDto;
-import com.rbux.library.management.system.dto.BorrowerDto;
 import com.rbux.library.management.system.entity.Book;
-import com.rbux.library.management.system.entity.BookBorrower;
-import com.rbux.library.management.system.entity.Borrower;
-import com.rbux.library.management.system.repository.BookBorrowerRepository;
 import com.rbux.library.management.system.repository.BookRepository;
-import com.rbux.library.management.system.repository.BorrowerRepository;
-import com.rbux.library.management.system.service.impl.BookBorrowerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

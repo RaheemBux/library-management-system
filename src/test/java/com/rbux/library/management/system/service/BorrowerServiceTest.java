@@ -1,9 +1,5 @@
 package com.rbux.library.management.system.service;
 
-import com.rbux.library.management.system.dto.BorrowerDto;
-import com.rbux.library.management.system.entity.Borrower;
-import com.rbux.library.management.system.repository.BorrowerRepository;
-import com.rbux.library.management.system.service.impl.BorrowerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

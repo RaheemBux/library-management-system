@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.rbux</groupId>
-	<artifactId>library-management-system</artifactId>
+	<artifactId>igm-system</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>library-management-system</name>
 	<description>Project for managing books in library</description>
